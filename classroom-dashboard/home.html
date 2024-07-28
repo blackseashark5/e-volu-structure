@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    min-height: 100vh;
+    margin: 0;
+  }
+
+  /* Styles for the left menu */
+  .left-menu {
+    width: 200px;
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-right: 1px solid #ccc;
+  }
+
+  .left-menu a {
+    display: block;
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+  }
+
+  .left-menu a:hover {
+    color: #4CAF50;
+  }
+
+  /* Styles for the content area */
+  .content {
+    flex-grow: 1;
+    padding: 20px;
+  }
+
+  /* Styles for hidden content sections */
+  .content-section {
+    display: none;
+  }
+
+  /* Styles for visible content sections */
+  .content-section.active {
+    display: block;
+  }
+</style>
+</head>
+<body>
+
+<div class="left-menu">
+  <a href="#" data-section="dashboard">Dashboard</a>
+  <a href="#" data-section="timetable">Timetable</a>
+  <a href="#" data-section="attendance">Attendance Tracking</a>
+  <a href="#" data-section="access-control">Access Control</a>
+</div>
+
+<div class="content">
+  <div id="dashboard" class="content-section active">
+    <h2>Classroom Efficiency and Security Dashboard</h2>
+    <main>
+      <div class="chart-container">
+          <canvas id="efficiencyChart"></canvas>
+      </div>
+      <div class="chart-container">
+          <canvas id="securityChart"></canvas>
+      </div>
+    </main>
+  </div>
+  <div id="timetable" class="content-section">
+    <h2>Timetable</h2>
+    <!-- Add content for Timetable section here -->
+  </div>
+  <div id="attendance" class="content-section">
+    <h2>Attendance Tracking</h2>
+    <!-- Add content for Attendance Tracking section here -->
+  </div>
+  <div id="access-control" class="content-section">
+    <h2>Access Control</h2>
+    <!-- Add content for Access Control section here -->
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const menuLinks = document.querySelectorAll('.left-menu a');
+    const contentSections = document.querySelectorAll('.content-section');
+
+    menuLinks.forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            const sectionId = this.getAttribute('data-section');
+
+            contentSections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            document.getElementById(sectionId).classList.add('active');
+        });
+    });
+
+    const efficiencyCtx = document.getElementById('efficiencyChart').getContext('2d');
+    const efficiencyChart = new Chart(efficiencyCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Class A', 'Class B', 'Class C', 'Class D', 'Class E'],
+            datasets: [{
+                label: 'Efficiency Score',
+                data: [75, 88, 95, 80, 90],
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    const securityCtx = document.getElementById('securityChart').getContext('2d');
+    const securityChart = new Chart(securityCtx, {
+        type: 'line',
+        data: {
+            labels: ['January', 'February', 'March', 'April', 'May'],
+            datasets: [{
+                label: 'Security Incidents',
+                data: [5, 3, 4, 2, 6],
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>
